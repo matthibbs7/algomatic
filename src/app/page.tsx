@@ -1,5 +1,7 @@
 import CollaborativeEditor from '@/components/CollaborativeEditor'
+import { ClientSideSuspense } from '@liveblocks/react'
 import Image from 'next/image'
+import { Room } from './Room'
 
 export default function Home() {
   return (
@@ -8,7 +10,9 @@ export default function Home() {
         <p>Hello world</p>
         
       </div> */}
-      <CollaborativeEditor />
+      <Room>
+        <CollaborativeEditor />
+      </Room>
     </main>
   )
 }

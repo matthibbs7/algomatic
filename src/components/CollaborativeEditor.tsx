@@ -3,13 +3,13 @@
 import { useCallback, useEffect, useState, Suspense } from 'react';
 import { MonacoBinding } from 'y-monaco';
 import { editor }from 'monaco-editor';
-import Editor from '@monaco-editor/react';
+import { Editor } from '@monaco-editor/react';
 import * as awarenessProtocol from "y-protocols/awareness";
 import { useSelf, useUsers } from "y-presence";
 import { awareness, provider, ydoc } from "../utils/y";
 import { UserAwareness } from '@/utils/types';
 import { Cursors } from "@/components/Cursors";
-
+import dynamic from 'next/dynamic'
 import styles from "./CollaborativeEditor.module.css";
 
 const testUsers = [
