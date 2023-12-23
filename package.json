@@ -1,0 +1,34 @@
+{
+  "name": "algomatic",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "^4.6.0",
+    "monaco-editor": "^0.45.0",
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "y-monaco": "^0.1.5",
+    "y-presence": "^0.2.3",
+    "y-webrtc": "^10.2.6",
+    "y-websocket": "^1.5.1",
+    "yjs": "^13.6.10"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
+}
