@@ -3,14 +3,15 @@
 import { useCallback, useEffect, useState, Suspense } from 'react';
 import { MonacoBinding } from 'y-monaco';
 import { editor }from 'monaco-editor';
-import { Editor } from '@monaco-editor/react';
-import * as awarenessProtocol from "y-protocols/awareness";
+import { Editor, useMonaco } from '@monaco-editor/react';
 import { useSelf, useUsers } from "y-presence";
-import { awareness, provider, ydoc } from "../utils/y";
+import { awareness, provider, ydoc } from "../../utils/y";
 import { UserAwareness } from '@/utils/types';
 import { Cursors } from "@/components/Cursors";
-import dynamic from 'next/dynamic'
 import styles from "./CollaborativeEditor.module.css";
+import { Avatars } from '../Avatars/Avatars';
+import { Toolbar } from '../Toolbar/Toolbar';
+import "monaco-themes/themes/Pastels on Dark.json";
 
 const testUsers = [
   { name: "Jonnny", email: "test@gmail.com" },
@@ -65,6 +66,8 @@ const InitializeEditor = () => {
   const [editorRef, setEditorRef] = useState<editor.IStandaloneCodeEditor>()
   const [initialRender, setInitialRender] = useState(true);
   const users = useUsers(awareness);
+  const monaco = useMonaco();
+  const [isThemeLoaded, setIsThemeLoaded] = useState(false);
 
   useEffect(() => {
     if (!editorRef) return;
@@ -93,22 +96,55 @@ const InitializeEditor = () => {
     setEditorRef(e);
   }, []);
 
+  useEffect(() => {
+    if (monaco) {
+      console.log("here is the monaco isntance:", monaco);
+      import("monaco-themes/themes/Pastels on Dark.json").then((data) => {
+        monaco.editor.defineTheme(
+          "P", 
+          {...data as editor.IStandaloneThemeData, 
+            colors: {
+            "editor.background": '#1B1B1F',
+            // "editor.selectionHighlightBorder": "#1B1B1F",
+            "editor.lineHighlightBorder": "#1d1d21"
+            }
+          }
+        );
+        setIsThemeLoaded(true);
+      });
+    }
+  }, [monaco])
+
   return (
     <>
       <div className={styles.container}>
         {provider ? <Cursors yProvider={provider} /> : null}
+        <div className={styles.editorHeader}>
+          <div>{editorRef ? <Toolbar editor={editorRef} /> : null}</div>
+          <Avatars />
+        </div>
         <div className={styles.editorContainer}>
           <Editor
             onMount={handleOnMount}
             height="100%"
             width="100hw"
-            theme="vs-light"
-            defaultLanguage="typescript"
+            theme={isThemeLoaded ? "P" : "dark"}
+            defaultLanguage="python"
             defaultValue=""
             options={{
+              wordBasedSuggestions: "off",
+              acceptSuggestionOnEnter: "off",
+              quickSuggestions: {
+                other: false,
+                comments: false,
+                strings: false
+              },
+              suggestOnTriggerCharacters: false,
               tabSize: 2,
               padding: { top: 20 },
+              minimap: { enabled: false },
             }}
+            
           />
         </div>
       </div>

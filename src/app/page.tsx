@@ -1,4 +1,4 @@
-import CollaborativeEditor from '@/components/CollaborativeEditor'
+import CollaborativeEditor from '@/components/CollaborativeEditor/CollaborativeEditor'
 import { ClientSideSuspense } from '@liveblocks/react'
 import Image from 'next/image'
 import { Room } from './Room'
